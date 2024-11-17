@@ -2,6 +2,7 @@ const fs = require('fs');
 const pdf = require('pdf-parse');
 const { HfInference } = require('@huggingface/inference');
 const { Pinecone } = require('@pinecone-database/pinecone');
+const { v4: uuidv4 } = require('uuid'); // Importar la función uuid
 
 const hf = new HfInference('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'); 
 
@@ -30,14 +31,16 @@ const saveToPinecone = async (embedding) => {
 
     const index = pc.index('quickstart'); 
 
+    const uniqueId = uuidv4(); // Generar un ID único
+
     const upsertResponse = await index.upsert([
         {
-            id: '1', // Cambia esto por un ID único para cada documento
+            id: uniqueId, // Usar el ID único generado
             values: embedding
         }
     ]);
     
-    console.log('Embedding subido a Pinecone:', upsertResponse);
+    console.log('Embedding subido a Pinecone con ID:', uniqueId, 'Respuesta:', upsertResponse);
 };
 
 const pdfPath = 'libro/swebok-v4.pdf';
