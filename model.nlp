@@ -2,7 +2,8 @@
   "settings": {
     "languages": [
       "en"
-    ]
+    ],
+    "forceNER": true
   },
   "nluManager": {
     "settings": {},
@@ -34,13 +35,26 @@
         "trainByDomain": false,
         "keepStopwords": true,
         "stemDict": {
-          "definit,engin,is,of,softwar,the,what": {
+          "hello": {
             "domain": "default",
-            "intent": "question.definition"
+            "intent": "greet.hello"
+          },
+          "hi,there": {
+            "domain": "default",
+            "intent": "greet.hello"
+          },
+          "bye": {
+            "domain": "default",
+            "intent": "greet.bye"
+          },
+          "later,see,you": {
+            "domain": "default",
+            "intent": "greet.bye"
           }
         },
         "intentDict": {
-          "question.definition": "default"
+          "greet.hello": "default",
+          "greet.bye": "default"
         },
         "useStemDict": true,
         "domains": {
@@ -65,26 +79,41 @@
             "keepStopwords": true,
             "docs": [
               {
-                "intent": "question.definition",
+                "intent": "greet.hello",
                 "tokens": [
-                  "what",
-                  "is",
-                  "the",
-                  "definit",
-                  "of",
-                  "softwar",
-                  "engin"
+                  "hello"
+                ]
+              },
+              {
+                "intent": "greet.hello",
+                "tokens": [
+                  "hi",
+                  "there"
+                ]
+              },
+              {
+                "intent": "greet.bye",
+                "tokens": [
+                  "bye"
+                ]
+              },
+              {
+                "intent": "greet.bye",
+                "tokens": [
+                  "see",
+                  "you",
+                  "later"
                 ]
               }
             ],
             "features": {
-              "what": 1,
-              "is": 1,
-              "the": 1,
-              "definit": 1,
-              "of": 1,
-              "softwar": 1,
-              "engin": 1
+              "hello": 1,
+              "hi": 1,
+              "there": 1,
+              "bye": 1,
+              "see": 1,
+              "you": 1,
+              "later": 1
             },
             "isEditing": false,
             "className": "BrainNLU",
@@ -110,44 +139,57 @@
               "network": {
                 "sizes": [
                   8,
-                  2
+                  3
                 ],
                 "layers": [
                   {
-                    "what": {},
-                    "is": {},
-                    "the": {},
-                    "definit": {},
-                    "of": {},
-                    "softwar": {},
-                    "engin": {},
+                    "hello": {},
+                    "hi": {},
+                    "there": {},
+                    "bye": {},
+                    "see": {},
+                    "you": {},
+                    "later": {},
                     "nonefeature": {}
                   },
                   {
-                    "question.definition": {
-                      "bias": 0.570548443,
+                    "greet.hello": {
+                      "bias": 3.210273181,
                       "weights": {
-                        "what": 1.704120159,
-                        "is": 1.704120159,
-                        "the": 1.704120159,
-                        "definit": 1.704120159,
-                        "of": 1.704120159,
-                        "softwar": 1.704120159,
-                        "engin": 1.704120159,
-                        "nonefeature": -0.562310517
+                        "hello": 9.152435303,
+                        "hi": 4.639036655,
+                        "there": 4.639036655,
+                        "bye": -3.156618834,
+                        "see": -1.071754098,
+                        "you": -1.071754098,
+                        "later": -1.071754098,
+                        "nonefeature": -3.136973143
+                      }
+                    },
+                    "greet.bye": {
+                      "bias": 2.8567835,
+                      "weights": {
+                        "hello": -2.780489922,
+                        "hi": -1.422917485,
+                        "there": -1.422917485,
+                        "bye": 9.504795074,
+                        "see": 3.212964296,
+                        "you": 3.212964296,
+                        "later": 3.212964296,
+                        "nonefeature": -2.799056053
                       }
                     },
                     "None": {
-                      "bias": 3.940219403,
+                      "bias": 2.145595442,
                       "weights": {
-                        "what": -0.561522663,
-                        "is": -0.561522663,
-                        "the": -0.561522663,
-                        "definit": -0.561522663,
-                        "of": -0.561522663,
-                        "softwar": -0.561522663,
-                        "engin": -0.561522663,
-                        "nonefeature": 8.430798531
+                        "hello": -2.081622601,
+                        "hi": -1.068931103,
+                        "there": -1.068931103,
+                        "bye": -2.064033031,
+                        "see": -0.711348832,
+                        "you": -0.711348832,
+                        "later": -0.711348832,
+                        "nonefeature": 10.209608078
                       }
                     }
                   }
@@ -172,7 +214,19 @@
     "extraSentences": [
       [
         "en",
-        "What is the definition of software engineering?"
+        "Hello"
+      ],
+      [
+        "en",
+        "Hi there"
+      ],
+      [
+        "en",
+        "Bye"
+      ],
+      [
+        "en",
+        "See you later"
       ]
     ]
   },
@@ -200,8 +254,15 @@
   "slotManager": {},
   "responses": {
     "en": {
-      "question.definition": [
-        {}
+      "greet.hello": [
+        {
+          "response": "Hello! How can I help you?"
+        }
+      ],
+      "greet.bye": [
+        {
+          "response": "Goodbye! Have a great day!"
+        }
       ]
     }
   },
